@@ -9,7 +9,7 @@ function Dashboard() {
           <a href="/signup">Sign Up</a>
         </li>
         <li>
-          <a href="/dashboard">Dashboard</a>
+          <a href="/">Dashboard</a>
         </li>
         <li>
           <a href="/productions/1">Productions</a>

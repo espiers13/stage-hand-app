@@ -9,20 +9,61 @@ import SignUp from "./pages/SignUp";
 import User from "./pages/User";
 import { Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useUser } from "./context/UserContext";
 
 function App() {
+  function ProtectedRoute({ children }) {
+    const { token } = useUser();
+    return token ? children : <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 p-4">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/productions/:id" element={<Productions />} />
-          <Route path="/productions/new" element={<NewProduction />} />
-          <Route path="/schedule" element={<Schedule />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/productions/:id"
+            element={
+              <ProtectedRoute>
+                <Productions />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/productions/new"
+            element={
+              <ProtectedRoute>
+                <NewProduction />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/schedule"
+            element={
+              <ProtectedRoute>
+                <Schedule />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/signup" element={<SignUp />} />{" "}
           <Route path="/login" element={<Login />} />
-          <Route path="/user/:username" element={<User />} />
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                <User />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
 
