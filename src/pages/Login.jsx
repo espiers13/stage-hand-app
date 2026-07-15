@@ -15,11 +15,10 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    console.log(email, password);
     loginUser(email, password)
       .then((data) => {
         login(data.user, data.token);
-        navigate("/user");
+        navigate("/");
       })
       .catch((err) => {
         if (err.response?.data?.msg === "User not found") {
@@ -54,6 +53,7 @@ function Login() {
               type="text"
               name="email"
               placeholder="name@email.com"
+              required
               className="p-2 rounded-lg border border-gray-400"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -66,6 +66,7 @@ function Login() {
               id="password"
               type="password"
               name="password"
+              required
               placeholder="********"
               className="p-2 rounded-lg border border-gray-400"
               onChange={(e) => setPassword(e.target.value)}

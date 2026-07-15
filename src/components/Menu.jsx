@@ -1,14 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 function Menu() {
+  const { user, token, logout } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
+  function handleLogout() {
+    logout();
+    navigate("/login");
+    setIsOpen(false);
+  }
+
+  function handleNav(path) {
+    navigate(path);
+    setIsOpen(false);
+  }
+
   const menuItems = [
     { label: "Dashboard", path: "/" },
-    { label: "Schedule", path: "/schedule" },
-    { label: "Login", path: "/login" },
+    { label: "Productions", path: "/productions" },
+    ...(user
+      ? [{ label: "Logout", action: handleLogout }]
+      : [{ label: "Login", path: "/login" }]),
   ];
 
   return (
